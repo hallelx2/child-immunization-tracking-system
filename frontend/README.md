@@ -30,7 +30,14 @@ frontend/
 ├── public/
 ├── src/
 │   ├── components/
+│   │   └── Navbar.js
 │   ├── pages/
+│   │   ├── Home.js
+│   │   ├── Profile.js
+│   │   ├── Immunizations.js
+│   │   ├── Milestones.js
+│   │   ├── Schedules.js
+│   │   └── Reports.js
 │   ├── App.js
 │   ├── index.js
 └── package.json

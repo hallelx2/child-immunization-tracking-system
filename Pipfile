@@ -10,6 +10,7 @@ pydantic = "*"
 motor = "*"
 fastapi-mail = "*"
 python-dotenv = "*"
+passlib = "*"
 
 [dev-packages]
 pytest = "*"

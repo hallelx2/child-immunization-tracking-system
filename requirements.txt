@@ -3,4 +3,5 @@ uvicorn
 pydantic
 motor
 fastapi-mail
+python-jose
 python-dotenv

@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel, EmailStr
 from app.services.notification_service import NotificationService
 
 router = APIRouter()

@@ -1,18 +1,15 @@
-from typing import Annotated
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException
 from app.core.security import create_access_token, get_password_hash, verify_password
-from app.db.repositories.user import UserRepository
-from app.db.models.user import User, UserCreate, UserInDB, UserPublic
-from app.db.base import database
+from app.db.models.user import User, UserCreate, UserInDB, UserLogin, UserPublic
+from app.db.base import user_repo
 
 router = APIRouter()
 
-UserDep= Annotated[UserRepository, Depends()]
-
 @router.post("/register")
-async def register_user(user_create: UserCreate, user_repo: UserDep):
+async def register_user(user_create: UserCreate):
 
     user = await user_repo.get_user_by_email(user_create.email)
+    print(user)
     if user:
         raise HTTPException(status_code=400, detail="Email already registered")
     
@@ -26,9 +23,11 @@ async def register_user(user_create: UserCreate, user_repo: UserDep):
     return {"msg": "User registered successfully"}
 
 @router.post("/login")
-async def login_user(user_login: UserCreate, user_repo: Annotated[UserRepository, Depends()]):
+async def login_user(user_login: UserLogin):
     
     user = await user_repo.get_user_by_email(user_login.email)
+    user = User(**user)
+
     if not user:
         raise HTTPException(status_code=400, detail="User doesn't exist")
     
@@ -40,7 +39,7 @@ async def login_user(user_login: UserCreate, user_repo: Annotated[UserRepository
 
     access_token = create_access_token(user.email)
 
-    return UserPublic(access_token=access_token, **user)
+    return UserPublic(access_token=access_token, **user.model_dump())
 
 
 #TODO: create an endpoint for googles oauth2 callback

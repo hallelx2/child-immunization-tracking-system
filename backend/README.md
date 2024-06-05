@@ -7,7 +7,6 @@ graph TD
     A[child-immunization-tracking-system] --> B[backend]
     A --> C[frontend]
     B --> D[app]
-    B --> [main.py]
     D --> E[core]
     D --> F[db]
     D --> G[api]

@@ -1,8 +1,10 @@
-from pydantic import BaseModel, EmailStr
-from typing import Optional
+from pydantic import BaseModel, BeforeValidator, EmailStr, Field
+from typing import Annotated, Optional
 
+
+PyObjectId = Annotated[str, BeforeValidator(str)]
 class User(BaseModel):
-    id: Optional[str] = None
+    id: Optional[PyObjectId] = Field(alias="_id", default=None)
     email: EmailStr
     hashed_password: str
     full_name: Optional[str] = None
@@ -10,7 +12,6 @@ class User(BaseModel):
     is_superuser: bool = False
 
 class UserPublic(BaseModel):
-    id: str
     email: EmailStr
     full_name: Optional[str] = None
     is_active: bool = True
